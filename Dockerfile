@@ -36,8 +36,15 @@ RUN python3 -m pip install --upgrade pip setuptools wheel
 WORKDIR /app
 RUN git clone https://github.com/SkyworkAI/SkyReels-V3.git /app/SkyReels-V3
 
-# Install SkyReels-V3 dependencies
+# Install SkyReels-V3 dependencies (split to resolve build order)
+# Step 1: Install torch first (flash_attn needs it at build time)
 WORKDIR /app/SkyReels-V3
+RUN pip install torch==2.8.0 torchvision==0.23.0
+
+# Step 2: Install flash_attn with torch available
+RUN pip install flash_attn==2.7.4.post1 --no-build-isolation
+
+# Step 3: Install remaining dependencies
 RUN pip install -r requirements.txt
 
 # Install RunPod serverless SDK
