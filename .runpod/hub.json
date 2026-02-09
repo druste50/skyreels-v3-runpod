@@ -1,0 +1,22 @@
+{
+    "title": "SkyReels V3 Runpod",
+    "description": "SkyReels-V3 Talking Avatar - Generate lipsync videos from image + audio. Supports H100, A100, 4090 GPUs.",
+    "type": "serverless",
+    "category": "Video",
+    "iconUrl": "https://raw.githubusercontent.com/SkyworkAI/SkyReels-V3/main/assets/skyreels_logo.png",
+    "config": {
+        "runsOn": "GPU",
+        "containerDiskInGb": 50,
+        "env": [
+            {
+                "key": "MODEL_DIR",
+                "value": "/runpod-volume/models"
+            },
+            {
+                "key": "HF_HOME",
+                "value": "/runpod-volume/huggingface"
+            }
+        ]
+    },
+    "private": false
+}

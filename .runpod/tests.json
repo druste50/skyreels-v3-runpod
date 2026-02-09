@@ -1,0 +1,12 @@
+{
+    "tests": [
+        {
+            "name": "validation_test_input",
+            "input": {
+                "text": "hello world",
+                "language": "en"
+            },
+            "timeout": 30000
+        }
+    ]
+}
