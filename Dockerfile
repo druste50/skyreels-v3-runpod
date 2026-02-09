@@ -41,7 +41,8 @@ RUN git clone https://github.com/SkyworkAI/SkyReels-V3.git /app/SkyReels-V3
 WORKDIR /app/SkyReels-V3
 RUN pip install torch==2.8.0 torchvision==0.23.0
 
-# Step 2: Install flash_attn with torch available
+# Step 2: Install flash_attn build deps + flash_attn
+RUN pip install psutil ninja
 RUN pip install flash_attn==2.7.4.post1 --no-build-isolation
 
 # Step 3: Install remaining dependencies
