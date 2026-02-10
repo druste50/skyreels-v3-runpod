@@ -41,15 +41,11 @@ RUN git clone https://github.com/SkyworkAI/SkyReels-V3.git /app/SkyReels-V3
 WORKDIR /app/SkyReels-V3
 RUN pip install torch==2.8.0 torchvision==0.23.0
 
-# Step 2: Install remaining deps, SKIP flash_attn (compile takes 40min+ and times out)
-# PyTorch 2.8 has SDPA with flash attention 2 built-in, so performance is similar
+# Step 2: Install deps WITHOUT flash_attn (compile times out on RunPod build)
+# PyTorch 2.8 SDPA handles attention natively with same performance
 RUN grep -v "flash_attn" requirements.txt > requirements_no_flash.txt && \
-    pip install -r requirements_no_flash.txt
-
-# Step 3: Try pre-built flash_attn wheel (fast), fall back to einops-only if unavailable
-RUN pip install einops && \
-    pip install flash-attn --no-build-isolation 2>/dev/null || \
-    echo "flash_attn not available as pre-built wheel, using PyTorch SDPA instead"
+    pip install -r requirements_no_flash.txt && \
+    pip install einops
 
 # Install RunPod serverless SDK
 RUN pip install runpod requests
